@@ -1,6 +1,6 @@
-# Netpro AI Product Catalog & Quotation Generator
+# AI Product Catalog & Quotation Generator
 
-> An internal AI-powered sales tool that takes a customer's infrastructure requirements, searches the Netpro product catalog using RAG (Retrieval-Augmented Generation), and instantly produces a branded PDF quotation — all in seconds.
+> An internal AI-powered sales tool that takes a customer's infrastructure requirements, searches the product catalog using RAG (Retrieval-Augmented Generation), and instantly produces a branded PDF quotation — all in seconds.
 
 ---
 
@@ -23,7 +23,7 @@
 
 ## Solution Overview
 
-The Netpro Sales team receives customer requirements like:
+The Sales team receives customer requirements like:
 
 > *"I need to cable a 3-floor office with 40 devices per floor. Include switches, patch panels, and Cat6 cabling."*
 
@@ -103,7 +103,7 @@ Client → API Gateway → Orchestrator Lambda
 ## Project Structure
 
 ```
-netpro-quotation-iac/
+quotation-iac/
 ├── main.tf                          # Root module — wires everything together
 ├── variables.tf                     # Input variables
 ├── outputs.tf                       # Outputs after deploy (API URL, bucket names, etc.)
@@ -169,8 +169,8 @@ Before deploying, make sure you have:
 ### Step 1 — Clone and configure
 
 ```bash
-git clone https://github.com/your-org/netpro-quotation-iac.git
-cd netpro-quotation-iac
+git clone https://github.com/your-org/quotation-iac.git
+cd quotation-iac
 
 cp terraform.tfvars.example terraform.tfvars
 # Edit terraform.tfvars with your values
@@ -199,8 +199,8 @@ Terraform will print the key outputs at the end:
 
 ```
 api_endpoint               = "https://abc123.execute-api.us-east-1.amazonaws.com/dev"
-catalog_bucket_name        = "netpro-quotation-dev-catalog-a1b2c3d4"
-output_bucket_name         = "netpro-quotation-dev-output-a1b2c3d4"
+catalog_bucket_name        = "quotation-dev-catalog-a1b2c3d4"
+output_bucket_name         = "quotation-dev-output-a1b2c3d4"
 knowledge_base_id          = "KBXXXXXXXXXX"
 sync_command               = "aws bedrock-agent start-ingestion-job ..."
 ```
@@ -214,7 +214,7 @@ Upload your PDFs, spec sheets, and pricing documents to the catalog S3 bucket:
 aws s3 sync ./your-catalog-folder/ s3://$(terraform output -raw catalog_bucket_name)/
 
 # Or upload individual files
-aws s3 cp netpro-products-2024.pdf s3://$(terraform output -raw catalog_bucket_name)/
+aws s3 cp products-2024.pdf s3://$(terraform output -raw catalog_bucket_name)/
 aws s3 cp pricing-sheet.pdf s3://$(terraform output -raw catalog_bucket_name)/
 aws s3 cp networking-specs.pdf s3://$(terraform output -raw catalog_bucket_name)/
 ```
@@ -269,7 +269,7 @@ Content-Type: application/json
 ```json
 {
   "quotation_id": "A1B2C3D4",
-  "download_url": "https://s3.amazonaws.com/.../Netpro-Quotation-A1B2C3D4.pdf?...",
+  "download_url": "https://s3.amazonaws.com/.../Quotation-A1B2C3D4.pdf?...",
   "expires_in": "1 hour",
   "recommendations": {
     "customer_summary": "3-floor office cabling for 120 devices",
@@ -295,7 +295,7 @@ Open the `download_url` to get the PDF. The link expires in 1 hour.
 
 ## Updating the Product Catalog
 
-Whenever Netpro updates their products or pricing:
+Whenever the client updates their products or pricing:
 
 ```bash
 # 1. Upload new/updated files
@@ -394,6 +394,6 @@ terraform destroy
 
 ## Author
 
-Deployed as part of the **AWS AI Competency** implementation by the Netpro team.
+Deployed as part of the **AWS AI Competency** implementation by the client team.
 
 Built with: Terraform · Amazon Bedrock · Claude 3.5 Sonnet · AWS Lambda · Python 3.12

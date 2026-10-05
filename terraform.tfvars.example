@@ -1,0 +1,14 @@
+# Copy this file to terraform.tfvars and fill in your values.
+# Do NOT commit terraform.tfvars to version control.
+
+aws_region      = "us-east-1"
+environment     = "dev"
+project_name    = "netpro-quotation"
+owner_tag       = "netpro-sales-team"
+claude_model_id = "anthropic.claude-3-5-sonnet-20241022-v2:0"
+lambda_timeout  = 120
+lambda_memory   = 512
+enable_waf      = false
+
+# Restrict API access to your office IP range (optional)
+# allowed_cidr_blocks = ["197.x.x.x/32"]

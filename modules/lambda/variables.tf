@@ -1,0 +1,9 @@
+variable "name_prefix"         { type = string }
+variable "lambda_role_arn"     { type = string }
+variable "knowledge_base_id"   { type = string }
+variable "output_bucket_name"  { type = string }
+variable "claude_model_id"     { type = string }
+variable "aws_region"          { type = string }
+variable "environment"         { type = string }
+variable "lambda_timeout"      { type = number }
+variable "lambda_memory"       { type = number }
